@@ -1,0 +1,16 @@
+<cfc-select
+  label="Pick the user"
+  [value]="selectedValue"
+  (selectionChanged)="onSelectionChange($event)"
+  [displayWith]="displayWithFn"
+  [compareWith]="compareWithFn"
+>
+    <cfc-option
+      *ngFor="let user of users"
+      [value]="user"
+      [disabled]="user.disabled"
+      disabledReason="This user is disabled!"
+    >
+      {{user.name}}
+    </cfc-option>
+</cfc-select>

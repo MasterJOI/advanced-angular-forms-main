@@ -1,0 +1,20 @@
+<form class="review" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h3>Course Review</h3>
+  <!--<paper-textarea
+    ngDefaultControl
+    formControlName="reviewText"
+    class="review-text"
+    rows="2"
+    placeholder="Your honest review..."
+    label="Review Text"
+  ></paper-textarea>-->
+  <cfc-rating-picker
+    formControlName="reviewRating"
+  ></cfc-rating-picker>
+  <div class="review-textarea"
+       contenteditable
+       formControlName="reviewText"
+  >
+  </div>
+  <button>Save</button>
+</form>
