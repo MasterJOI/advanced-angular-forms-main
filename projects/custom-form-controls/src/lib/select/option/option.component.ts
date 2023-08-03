@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   HostBinding,
   HostListener,
@@ -9,6 +9,7 @@ import {
   Output
 } from '@angular/core';
 import {SelectValue} from '../select.component';
+import {Highlightable} from '@angular/cdk/a11y';
 
 @Component({
   selector: 'cfc-option',
@@ -16,10 +17,10 @@ import {SelectValue} from '../select.component';
   styleUrls: ['./option.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OptionComponent<T> {
+export class OptionComponent<T> implements Highlightable {
 
   @Input()
-  value: SelectValue<T> = null;
+  value: T | null = null;
 
   @Input()
   disabledReason = '';
@@ -31,6 +32,9 @@ export class OptionComponent<T> {
   // not allow to edit property directly, add class 'selected' if isSelected=true
   @HostBinding('class.selected')
   protected isSelected = false;
+
+  @HostBinding('class.active')
+  protected isActive = false;
 
   @Output()
   selected = new EventEmitter<OptionComponent<T>>();
@@ -44,7 +48,8 @@ export class OptionComponent<T> {
   }
 
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private el: ElementRef<HTMLElement>
   ) {
   }
 
@@ -56,5 +61,18 @@ export class OptionComponent<T> {
   highlightAsSelected() {
     this.isSelected = true;
     this.cd.markForCheck();
+  }
+
+  setActiveStyles(): void {
+    this.isActive = true;
+    this.cd.markForCheck();
+  }
+  setInactiveStyles(): void {
+    this.isActive = false;
+    this.cd.markForCheck();
+  }
+
+  scrollInoView(options: ScrollIntoViewOptions) {
+    this.el.nativeElement.scrollIntoView(options);
   }
 }

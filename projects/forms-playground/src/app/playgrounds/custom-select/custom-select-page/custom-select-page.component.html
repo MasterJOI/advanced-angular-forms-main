@@ -1,12 +1,18 @@
+<!--
+(selectionChanged)="onSelectionChange($event)"
+-->
 <cfc-select
   label="Pick the user"
-  [value]="selectedValue"
-  (selectionChanged)="onSelectionChange($event)"
+  (searchChanged)="onSearchChange($event)"
+  (closed)="onSearchChange('')"
   [displayWith]="displayWithFn"
   [compareWith]="compareWithFn"
+  multiple
+  [searchable]="true"
+  [formControl]="selectedValue"
 >
     <cfc-option
-      *ngFor="let user of users"
+      *ngFor="let user of filteredUsers"
       [value]="user"
       [disabled]="user.disabled"
       disabledReason="This user is disabled!"

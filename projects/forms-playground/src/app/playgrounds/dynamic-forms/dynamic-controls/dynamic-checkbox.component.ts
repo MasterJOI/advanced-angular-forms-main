@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
-import { ValidatorMessageContainer } from '../../../core/input-error/validator-message-container.directive';
-import { BaseDynamicControl, dynamicControlProvider, sharedDynamicControlDeps } from './base-dynamic-control';
+import {Component} from '@angular/core';
+import {BaseDynamicControl, dynamicControlProvider} from './base-dynamic-control';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-dynamic-checkbox',
   standalone: true,
-  imports: [...sharedDynamicControlDeps, ValidatorMessageContainer],
-  viewProviders: [dynamicControlProvider],
+  viewProviders: [
+    dynamicControlProvider
+  ],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div>
-      <input type="checkbox" [container]="containerDir.container" [formControlName]="control.controlKey" [checked]="control.config.value" [id]="control.controlKey">
-      <label [for]="control.controlKey">{{control.config.label}}</label>
-    </div>
-    <ng-container validatorMessageContainer #containerDir="validatorMessageContainer"></ng-container>
+    <input [id]="control.controlKey"
+           type="checkbox"
+           [value]="control.config.value"
+           [formControlName]="control.controlKey"
+    >
+    <label [for]="control.controlKey">{{control.config.label}}</label>
   `,
   styles: [`
     :host > div {

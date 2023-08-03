@@ -4,8 +4,11 @@ export interface DynamicOptions {
   label: string;
   value: string;
 }
+
 type CustomValidators = { banWords: ValidatorFn };
-type ValidatorKeys = keyof Omit<typeof Validators & CustomValidators, 'prototype'  | 'compose' | 'composeAsync'>;
+
+type ValidatorKeys = keyof Omit<typeof Validators & CustomValidators, 'prototype' | 'compose' | 'composeAsync'>;
+
 export interface DynamicControl<T = string> {
   controlType: 'input' | 'select' | 'checkbox' | 'group';
   type?: string;

@@ -1,15 +1,71 @@
 <div class="action-buttons">
-  <button (click)="formLoadingTrigger.next('user')" type="button">Load User Form</button>
-  <button (click)="formLoadingTrigger.next('company')" type="button">Load Company Form</button>
+  <button
+    type="button"
+    (click)="formLoadingTrigger.next('user')"
+  >Load user form
+  </button>
+  <button
+    type="button"
+    (click)="formLoadingTrigger.next('company')"
+  >Load company form
+  </button>
 </div>
+
 <div *ngIf="formConfig$ | async as formConfig" class="dynamic-form-container">
-  <form [formGroup]="formConfig.form" (ngSubmit)="onSubmit(formConfig.form)">
-    <h3 class="form-heading">{{formConfig.config.description}}</h3>
-    <ng-container *ngFor="let control of formConfig.config.controls | keyvalue: comparatorFn">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3 class="form-heading">{{formConfig.description}}</h3>
+    <ng-container *ngFor="let control of formConfig.controls | keyvalue: comparatorFn">
+
+      <!--Simple realization without components-->
+
+      <!--<ng-container [ngSwitch]="control.value.controlType">
+        <input
+          *ngSwitchCase="'input'"
+          [id]="control.key"
+          [type]="control.value.type"
+          [value]="control.value.value"
+          [formControlName]="control.key"
+        >
+
+        <ng-container *ngSwitchCase="'select'">
+          <select
+            [id]="control.key"
+            [value]="control.value.value"
+          >
+            <option
+              *ngFor="let option of control.value.options"
+              [value]="option.value"
+              [formControlName]="control.key"
+            >{{option.label}}</option>
+          </select>
+        </ng-container>
+
+      </ng-container>-->
+
+      <!--To provide input values in dynamic component use Injector-->
       <ng-container
-        [ngComponentOutlet]="controlResolver.resolve(control.value.controlType) | async"
-        [ngComponentOutletInjector]="control.key | controlInjector:control.value"></ng-container>
-      </ng-container>
-    <button [disabled]="formConfig.form.invalid">Save</button>
+        [ngComponentOutlet]="dynamicControlResolver.resolve(control.value.controlType) | async"
+        [ngComponentOutletInjector]="control.key | controlInjector: control.value"
+      ></ng-container>
+
+        <ng-container *ngIf="form.get(control.key) as controlName">
+          <div class="input-error" *ngIf="controlName.dirty && controlName.hasError('required')">
+            This field is required
+          </div>
+          <div class="input-error" *ngIf="controlName.dirty && controlName.hasError('minlength')">
+            This field should be at least <strong>{{controlName.getError('minlength').requiredLength}}</strong>
+            characters
+          </div>
+          <div class="input-error" *ngIf="controlName.dirty && controlName.hasError('banWords')">
+            Value <strong>{{controlName.getError('banWords').bannedWord}}</strong> is banned!
+          </div>
+          <div
+            class="input-error" *ngIf="controlName.dirty && controlName.hasError('email')">
+            This field isn`t an email
+          </div>
+        </ng-container>
+
+    </ng-container>
+    <button [disabled]="form.invalid">Save</button>
   </form>
 </div>

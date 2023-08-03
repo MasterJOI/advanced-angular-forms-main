@@ -44,7 +44,10 @@
           "label": "YouTube",
           "value": null,
           "type": "text",
-          "order": 0
+          "order": 0,
+          "validators": {
+            "required": true
+          }
         },
         "twitter": {
           "controlType": "input",
