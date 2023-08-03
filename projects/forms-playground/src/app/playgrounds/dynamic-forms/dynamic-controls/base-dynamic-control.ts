@@ -4,7 +4,6 @@ import {AbstractControl, ControlContainer, FormControl, FormGroup, Validators} f
 import {KeyValue} from '@angular/common';
 import {DynamicControl} from '../dynamic-forms.model';
 import {banWords} from '../../reactive-forms/validators/ban-words.validator';
-import {formControl} from '@angular/core/schematics/migrations/typed-forms/util';
 
 /*To provide not only FormGroup but any realization of ControlContainer (NgForm, FormGroupName...),
 we use factory function which get closest ControlContainer but start from parent view*/

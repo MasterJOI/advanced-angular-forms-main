@@ -12,9 +12,9 @@
 </div>
 
 <div *ngIf="formConfig$ | async as formConfig" class="dynamic-form-container">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <h3 class="form-heading">{{formConfig.description}}</h3>
-    <ng-container *ngFor="let control of formConfig.controls | keyvalue: comparatorFn">
+  <form [formGroup]="formConfig.form" (ngSubmit)="onSubmit(formConfig.form)">
+    <h3 class="form-heading">{{formConfig.config.description}}</h3>
+    <ng-container *ngFor="let control of formConfig.config.controls | keyvalue: comparatorFn">
 
       <!--Simple realization without components-->
 
@@ -48,7 +48,7 @@
         [ngComponentOutletInjector]="control.key | controlInjector: control.value"
       ></ng-container>
 
-        <ng-container *ngIf="form.get(control.key) as controlName">
+        <ng-container *ngIf="formConfig.form.get(control.key) as controlName">
           <div class="input-error" *ngIf="controlName.dirty && controlName.hasError('required')">
             This field is required
           </div>
@@ -66,6 +66,6 @@
         </ng-container>
 
     </ng-container>
-    <button [disabled]="form.invalid">Save</button>
+    <button [disabled]="formConfig.form.invalid">Save</button>
   </form>
 </div>

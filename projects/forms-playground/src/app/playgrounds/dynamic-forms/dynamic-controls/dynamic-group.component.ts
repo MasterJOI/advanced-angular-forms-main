@@ -1,7 +1,7 @@
 import {Component, HostBinding, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BaseDynamicControl, comparatorFn, dynamicControlProvider} from './base-dynamic-control';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {AbstractControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ControlInjectorPipe} from '../control-injector.pipe';
 import {DynamicControlResolver} from '../dynamic-control-resolver.service';
 
