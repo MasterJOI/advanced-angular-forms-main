@@ -14,24 +14,7 @@
       [appBanWords]="['test', 'admin']"
       [minlength]="4"
       placeholder="Enter your name">
-    <div
-      class="input-error"
-      *ngIf="firstName.hasError('required') && firstName.dirty"
-    >
-      This field is required
-    </div>
-    <div
-      class="input-error"
-      *ngIf="firstName.hasError('minlength') && firstName.dirty"
-    >
-      This field should be at least <strong>{{firstName.getError('minlength').requiredLength}}</strong> characters
-    </div>
-    <div
-      class="input-error"
-      *ngIf="firstName.hasError('appBanWords') && firstName.dirty"
-    >
-      The value <strong>{{firstName.value}}</strong> is not allowed!
-    </div>
+    <app-input-error *ngIf="firstName.dirty" [errors]="firstName.errors"></app-input-error>
   </div>
   <div class="form-field">
     <label for="last-name">Last Name</label>
@@ -45,24 +28,7 @@
       type="text"
       id="last-name"
       placeholder="Enter your last name">
-    <div
-      class="input-error"
-      *ngIf="lastName.hasError('required') && lastName.dirty"
-    >
-      This field is required
-    </div>
-    <div
-      class="input-error"
-      *ngIf="lastName.hasError('minlength') && lastName.dirty"
-    >
-      This field is too short
-    </div>
-    <div
-      class="input-error"
-      *ngIf="lastName.hasError('appBanWords') && lastName.dirty"
-    >
-      The value <strong>{{lastName.value}}</strong> is not allowed!
-    </div>
+    <app-input-error *ngIf="lastName.dirty" [errors]="lastName.errors"></app-input-error>
   </div>
   <div class="form-field">
     <label for="nickname">Nickname</label>
@@ -78,30 +44,7 @@
       type="text"
       id="nickname"
       placeholder="Come up with a nickname">
-    <div
-      class="input-error"
-      *ngIf="nickName.hasError('required') && nickName.dirty"
-    >
-      This field is required
-    </div>
-    <div
-      class="input-error"
-      *ngIf="nickName.hasError('minlength') && nickName.dirty"
-    >
-      This field is too short
-    </div>
-    <div
-      class="input-error"
-      *ngIf="nickName.hasError('pattern') && nickName.dirty"
-    >
-      This field is incorrect
-    </div>
-    <div
-      class="input-error"
-      *ngIf="nickName.hasError('appUniqueNickname') && nickName.dirty"
-    >
-      This nickname is already taken!
-    </div>
+    <app-input-error *ngIf="nickName.dirty" [errors]="nickName.errors"></app-input-error>
     <div *ngIf="nickName.pending" class="input-info">Checking...</div>
   </div>
   <div class="form-field">
@@ -114,12 +57,7 @@
       type="email"
       id="email"
       placeholder="Provide your email">
-    <div
-      class="input-error"
-      *ngIf="email.hasError('email') && email.dirty"
-    >
-      This field isn`t an email
-    </div>
+    <app-input-error *ngIf="email.dirty" [errors]="email.errors"></app-input-error>
   </div>
   <div class="form-field-inline-group">
     <div class="form-field form-field--small">
@@ -132,12 +70,7 @@
       >
         <option *ngFor="let year of years" [value]="year">{{year}}</option>
       </select>
-      <div
-        class="input-error"
-        *ngIf="yearOfBirth.hasError('required') && yearOfBirth.dirty"
-      >
-        This field is required
-      </div>
+      <app-input-error *ngIf="yearOfBirth.dirty" [errors]="yearOfBirth.errors"></app-input-error>
     </div>
     <div class="form-field form-field--small">
       <label for="passport">Passport Number</label>
@@ -150,18 +83,7 @@
         type="text"
         id="passport"
         placeholder="Provide Passport Data">
-      <div
-        class="input-error"
-        *ngIf="passport.hasError('required') && passport.dirty"
-      >
-        This field is required
-      </div>
-      <div
-        class="input-error"
-        *ngIf="passport.hasError('pattern') && passport.dirty"
-      >
-        This field is incorrect
-      </div>
+      <app-input-error *ngIf="passport.dirty" [errors]="passport.errors"></app-input-error>
     </div>
   </div>
   <fieldset ngModelGroup="address">
@@ -176,12 +98,7 @@
         type="text"
         id="full-address"
         placeholder="Street name and house number">
-      <div
-        class="input-error"
-        *ngIf="fullAdress.hasError('required') && fullAdress.dirty"
-      >
-        This field is required
-      </div>
+      <app-input-error *ngIf="fullAdress.dirty" [errors]="fullAdress.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="city">City</label>
@@ -193,12 +110,7 @@
         type="text"
         id="city"
         placeholder="City">
-      <div
-        class="input-error"
-        *ngIf="city.hasError('required') && city.dirty"
-      >
-        This field is required
-      </div>
+      <app-input-error *ngIf="city.dirty" [errors]="city.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="post-code">Post Code</label>
@@ -210,12 +122,7 @@
         type="number"
         id="post-code"
         placeholder="Post code">
-      <div
-        class="input-error"
-        *ngIf="postCode.hasError('required') && postCode.dirty"
-      >
-        This field is required
-      </div>
+      <app-input-error *ngIf="postCode.dirty" [errors]="postCode.errors"></app-input-error>
     </div>
   </fieldset>
   <fieldset
@@ -235,18 +142,7 @@
         id="password"
         placeholder="Enter user's password"
       >
-      <div
-        class="input-error"
-        *ngIf="password.hasError('required') && password.dirty"
-      >
-        This field is required
-      </div>
-      <div
-        class="input-error"
-        *ngIf="password.hasError('minlength') && password.dirty"
-      >
-        This field should be at least <strong>{{password.getError('minlength').requiredLength}}</strong> characters
-      </div>
+      <app-input-error *ngIf="password.dirty" [errors]="password.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="confirm-password">Confirm password</label>
@@ -258,12 +154,7 @@
         id="confirm-password"
         placeholder="Confirm the password"
       >
-      <div
-        class="input-error"
-        *ngIf="confirmPassword.hasError('appPasswordShouldMatch') && confirmPassword.dirty"
-      >
-        Password doesn`t match
-      </div>
+      <app-input-error *ngIf="confirmPassword.dirty" [errors]="confirmPassword.errors"></app-input-error>
     </div>
   </fieldset>
   <button [disabled]="form.invalid || form.pending">Save</button>

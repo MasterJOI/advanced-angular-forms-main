@@ -5,6 +5,8 @@ import {UserInfo} from '../../../core/user-info';
 import {BanWordsDirective} from '../validators/ban-words.directive';
 import {PasswordShouldMatchDirective} from '../validators/password-should-match.directive';
 import {UniqueNicknameDirective} from '../validators/unique-nickname.directive';
+import {InputErrorComponent} from '../../../core/input-error/input-error.component';
+import {ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES} from '../../../core/input-error/validation-error-messages.token';
 
 @Component({
   selector: 'app-template-forms-page',
@@ -14,7 +16,8 @@ import {UniqueNicknameDirective} from '../validators/unique-nickname.directive';
     FormsModule,
     BanWordsDirective,
     PasswordShouldMatchDirective,
-    UniqueNicknameDirective
+    UniqueNicknameDirective,
+    InputErrorComponent
   ],
   templateUrl: './template-forms-page.component.html',
   styleUrls: [
