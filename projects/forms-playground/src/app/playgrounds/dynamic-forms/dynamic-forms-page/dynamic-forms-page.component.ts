@@ -7,7 +7,6 @@ import {DynamicFormConfig} from '../dynamic-forms.model';
 import {DynamicControlResolver} from '../dynamic-control-resolver.service';
 import {ControlInjectorPipe} from '../control-injector.pipe';
 import {comparatorFn} from '../dynamic-controls/base-dynamic-control';
-import {InputErrorComponent} from '../../../core/input-error/input-error.component';
 import {ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES} from '../../../core/input-error/validation-error-messages.token';
 
 @Component({
@@ -17,10 +16,10 @@ import {ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES} from '../../../core/input-err
   providers: [
     {
       provide: VALIDATION_ERROR_MESSAGES,
-      useValue: {...ERROR_MESSAGES, required: `Insert some value!`}
+      useValue: {...ERROR_MESSAGES, required: () => `Insert some value!`}
     }
   ],
-  imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe, InputErrorComponent],
+  imports: [CommonModule, ReactiveFormsModule, ControlInjectorPipe],
   templateUrl: './dynamic-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',

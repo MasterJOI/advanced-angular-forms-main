@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroupDirective, NgForm } from '@angular/forms';
+import {Injectable} from '@angular/core';
+import {AbstractControl, FormGroupDirective, NgForm} from '@angular/forms';
 
 export interface ErrorStateMatcher {
-  isErrorVisible(control: AbstractControl | null, form: FormGroupDirective | NgForm | null): boolean;
+  isErrorVisible(control: AbstractControl | null, form: NgForm | FormGroupDirective | null): boolean;
 }
 
 @Injectable({
@@ -10,13 +10,14 @@ export interface ErrorStateMatcher {
 })
 export class ErrorStateMatcher implements ErrorStateMatcher {
 
-  isErrorVisible(control: AbstractControl | null, form: FormGroupDirective | NgForm | null) {
+  isErrorVisible(control: AbstractControl | null, form: NgForm | FormGroupDirective | null) {
     return Boolean(control && control.invalid && (control.dirty || (form && form.submitted)));
   }
 }
+
 export class OnTouchedErrorStateMatcher implements ErrorStateMatcher {
 
-  isErrorVisible(control: AbstractControl | null, form: FormGroupDirective | NgForm | null) {
+  isErrorVisible(control: AbstractControl | null, form: NgForm | FormGroupDirective | null) {
     return Boolean(control && control.invalid && (control.touched || (form && form.submitted)));
   }
 }

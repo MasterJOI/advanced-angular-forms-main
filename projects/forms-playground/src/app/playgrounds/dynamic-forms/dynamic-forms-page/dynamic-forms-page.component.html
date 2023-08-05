@@ -48,8 +48,6 @@
         [ngComponentOutletInjector]="control.key | controlInjector: control.value"
       ></ng-container>
 
-      <app-input-error *ngIf="formConfig.form.get(control.key)?.dirty" [errors]="formConfig.form.get(control.key)?.errors"></app-input-error>
-
     </ng-container>
     <button [disabled]="formConfig.form.invalid">Save</button>
   </form>

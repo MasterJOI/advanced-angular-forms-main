@@ -1,24 +1,26 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" (reset)="onReset($event)">
   <div class="form-field">
     <label for="name">First Name</label>
-    <input formControlName="firstName" type="text" id="name" placeholder="Enter your name">
-    <app-input-error *ngIf="form.controls.firstName.dirty" [errors]="form.controls.firstName.errors"></app-input-error>
+    <input
+      [errorStateMatcher]="customShowErrorStrategy"
+      formControlName="firstName"
+      type="text"
+      id="name"
+      placeholder="Enter your name"
+    >
   </div>
   <div class="form-field">
     <label for="last-name">Last Name</label>
     <input formControlName="lastName" type="text" id="last-name" placeholder="Enter your last name">
-    <app-input-error *ngIf="form.controls.lastName.dirty" [errors]="form.controls.lastName.errors"></app-input-error>
   </div>
   <div class="form-field">
     <label for="nickname">Nickname</label>
     <input formControlName="nickname" type="text" id="nickname" placeholder="Come up with a nickname">
-    <app-input-error *ngIf="form.controls.nickname.dirty" [errors]="form.controls.nickname.errors"></app-input-error>
     <div *ngIf="form.controls.nickname.pending" class="input-info">Checking...</div>
   </div>
   <div class="form-field">
     <label for="email">Email</label>
     <input formControlName="email" type="email" id="email" placeholder="Provide your email">
-    <app-input-error *ngIf="form.controls.email.dirty" [errors]="form.controls.email.errors"></app-input-error>
   </div>
   <div class="form-field-inline-group">
     <div class="form-field form-field--small">
@@ -26,12 +28,10 @@
       <select id="year-of-birth" formControlName="yearOfBirth">
         <option *ngFor="let year of years" [value]="year">{{year}}</option>
       </select>
-      <app-input-error *ngIf="form.controls.yearOfBirth.dirty" [errors]="form.controls.yearOfBirth.errors"></app-input-error>
     </div>
     <div class="form-field form-field--small">
       <label for="passport">Passport Number</label>
       <input formControlName="passport" type="text" id="passport" placeholder="Provide Passport Data">
-      <app-input-error *ngIf="form.controls.passport.dirty" [errors]="form.controls.passport.errors"></app-input-error>
     </div>
   </div>
   <fieldset formGroupName="address">
@@ -39,17 +39,14 @@
     <div class="form-field">
       <label for="full-address">Full Address</label>
       <input formControlName="fullAddress" type="text" id="full-address" placeholder="Street name and house number">
-      <app-input-error *ngIf="form.controls.address.controls.fullAddress.dirty" [errors]="form.controls.address.controls.fullAddress.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="city">City</label>
       <input formControlName="city" type="text" id="city" placeholder="City">
-      <app-input-error *ngIf="form.controls.address.controls.city.dirty" [errors]="form.controls.address.controls.city.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="post-code">Post Code</label>
       <input formControlName="postCode" type="number" id="post-code" placeholder="Post code">
-      <app-input-error *ngIf="form.controls.address.controls.postCode.dirty" [errors]="form.controls.address.controls.postCode.errors"></app-input-error>
     </div>
   </fieldset>
   <fieldset formArrayName="phones">
@@ -79,17 +76,20 @@
     </ng-container>
 
   </fieldset>
-  <fieldset formGroupName="password">
+  <fieldset
+    formGroupName="password"
+    [errorContainer]="containerDir.container"
+  >
     <legend>Password</legend>
     <div class="form-field">
       <label for="password">Create Password</label>
       <input formControlName="password" type="password" id="password" placeholder="Enter password...">
-      <app-input-error *ngIf="form.controls.password.controls.password.dirty" [errors]="form.controls.password.controls.password.errors"></app-input-error>
     </div>
     <div class="form-field">
       <label for="confirm-password">Confirm Password</label>
-      <input formControlName="confirmPassword" type="password" id="confirm-password" placeholder="Enter password...">
-      <app-input-error *ngIf="form.controls.password.controls.confirmPassword.dirty" [errors]="form.controls.password.controls.confirmPassword.errors"></app-input-error>
+      <input withoutValidationErrors formControlName="confirmPassword" type="password" id="confirm-password" placeholder="Enter password...">
+      <!--to get ViewContainerRef from any template, we assign directive to template field via 'exportAs' and use directive 'container' value with ViewContainerRef (like NgModel)-->
+      <ng-container validatorMessageContainer #containerDir="validatorMessageContainer"></ng-container>
     </div>
   </fieldset>
   <button [disabled]="form.invalid">Save</button>

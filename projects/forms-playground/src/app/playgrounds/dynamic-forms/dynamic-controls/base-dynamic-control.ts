@@ -1,9 +1,17 @@
 import {Directive, HostBinding, inject, OnInit, StaticProvider} from "@angular/core";
 import {CONTROL_DATA} from '../control-data.token';
-import {AbstractControl, ControlContainer, FormControl, FormGroup, Validators} from '@angular/forms';
-import {KeyValue} from '@angular/common';
+import {
+  AbstractControl,
+  ControlContainer,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import {CommonModule, KeyValue} from '@angular/common';
 import {DynamicControl} from '../dynamic-forms.model';
 import {banWords} from '../../reactive-forms/validators/ban-words.validator';
+import {DynamicValidatorMessage} from '../../../core/dynamic-validator-message.directive';
 
 /*To provide not only FormGroup but any realization of ControlContainer (NgForm, FormGroupName...),
 we use factory function which get closest ControlContainer but start from parent view*/
@@ -11,6 +19,8 @@ export const dynamicControlProvider: StaticProvider = {
   provide: ControlContainer,
   useFactory: () => inject(ControlContainer, {skipSelf: true})
 }
+
+export const sharedDynamicControlDeps = [CommonModule, ReactiveFormsModule, DynamicValidatorMessage];
 
 export const comparatorFn = (a: KeyValue<string, DynamicControl>, b: KeyValue<string, DynamicControl>): number => {
   // if number > 0 = a after b

@@ -26,7 +26,7 @@ export class PasswordShouldMatchDirective implements Validator {
       return null;
     }
 
-    confirmPassword?.setErrors(error);
+    if (!confirmPassword?.hasError('appPasswordShouldMatch')) confirmPassword?.setErrors(error);
     return error;
   }
 }

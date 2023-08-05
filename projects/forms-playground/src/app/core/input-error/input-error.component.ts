@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {CommonModule, KeyValue} from '@angular/common';
 import {ValidationErrors} from '@angular/forms';
-import {VALIDATION_ERROR_MESSAGES} from './validation-error-messages.token';
 import {ErrorMessagePipe} from '../error-message.pipe';
 
 @Component({
@@ -28,7 +27,7 @@ export class InputErrorComponent {
 
   @Input()
   errors: ValidationErrors | undefined | null = null;
-  
+
   trackByFn(index: number, item: KeyValue<string, any>) {
     return item.key;
   }

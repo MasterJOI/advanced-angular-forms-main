@@ -5,8 +5,8 @@ import {UserInfo} from '../../../core/user-info';
 import {BanWordsDirective} from '../validators/ban-words.directive';
 import {PasswordShouldMatchDirective} from '../validators/password-should-match.directive';
 import {UniqueNicknameDirective} from '../validators/unique-nickname.directive';
-import {InputErrorComponent} from '../../../core/input-error/input-error.component';
-import {ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES} from '../../../core/input-error/validation-error-messages.token';
+import {DynamicValidatorMessage} from '../../../core/dynamic-validator-message.directive';
+import {ValidatorMessageContainer} from '../../../core/input-error/validator-message-container.directive';
 
 @Component({
   selector: 'app-template-forms-page',
@@ -17,7 +17,8 @@ import {ERROR_MESSAGES, VALIDATION_ERROR_MESSAGES} from '../../../core/input-err
     BanWordsDirective,
     PasswordShouldMatchDirective,
     UniqueNicknameDirective,
-    InputErrorComponent
+    DynamicValidatorMessage,
+    ValidatorMessageContainer
   ],
   templateUrl: './template-forms-page.component.html',
   styleUrls: [
@@ -31,14 +32,14 @@ export class TemplateFormsPageComponent implements OnInit, AfterViewInit {
 
   userInfo: UserInfo = {
     city: 'example',
-    confirmPassword: 'example',
-    email: 'example@example',
-    firstName: 'example',
+    confirmPassword: '',
+    email: 'example',
+    firstName: '',
     fullAdress: 'example',
     lastName: 'example',
     nickname: 'example',
     passport: 'AA343234',
-    password: 'example',
+    password: '',
     postCode: 0,
     yearOfBirth: 2001
   };
@@ -69,6 +70,7 @@ export class TemplateFormsPageComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitForm(event: SubmitEvent) {
+    if (this.formDir.invalid) return;
     console.log(this.formDir.value);
     console.log(event)
 

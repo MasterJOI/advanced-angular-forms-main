@@ -6,17 +6,25 @@ import {UserSkillsService} from '../../../core/user-skills.service';
 import {banWords} from '../validators/ban-words.validator';
 import {passwordShouldMatch} from '../validators/password-should-match.validator';
 import {UniqueNicknameValidator} from '../validators/unique-nickname.validator';
-import {InputErrorComponent} from '../../../core/input-error/input-error.component';
+import {DynamicValidatorMessage} from '../../../core/dynamic-validator-message.directive';
+import {ErrorStateMatcher, OnTouchedErrorStateMatcher} from '../../../core/input-error/error-state-matcher.service';
+import {ValidatorMessageContainer} from '../../../core/input-error/validator-message-container.directive';
 
 @Component({
   selector: 'app-reactive-forms-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputErrorComponent],
+  imports: [CommonModule, ReactiveFormsModule, DynamicValidatorMessage, ValidatorMessageContainer],
   templateUrl: './reactive-forms-page.component.html',
   styleUrls: [
     '../../common-page.scss',
     '../../common-form.scss',
     './reactive-forms-page.component.scss'
+  ],
+  providers: [
+    {
+      provide: ErrorStateMatcher,
+      useClass: ErrorStateMatcher // any other custom ErrorStateMather
+    }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -34,6 +42,8 @@ export class ReactiveFormsPageComponent implements OnInit, OnDestroy {
 
   /*to dynamically add or remove validators with different values we need to store and pass reference on this validator*/
   dynamicValidator = Validators.minLength(10);
+
+  customShowErrorStrategy = new OnTouchedErrorStateMatcher();
 
   // Old code style
   /*form = new FormGroup({
@@ -64,7 +74,7 @@ export class ReactiveFormsPageComponent implements OnInit, OnDestroy {
 
   // Better use FormBuilder
   form = this.fb.group({
-    firstName: ['Dmytro', [Validators.required, Validators.minLength(4), banWords(['test', 'admin'])]],
+    firstName: ['', [Validators.required, Validators.minLength(4), banWords(['test', 'admin'])]],
     lastName: ['Mezhenskyi', [Validators.required, Validators.minLength(2)]],
     nickname: ['',
       {
@@ -77,7 +87,7 @@ export class ReactiveFormsPageComponent implements OnInit, OnDestroy {
           /*need to bind unique validator to fnd httpService*/
           this.uniqueNicknameValidator.validate.bind(this.uniqueNicknameValidator)
         ],
-        updateOn:  'blur'
+        updateOn: 'blur'
       }
 
     ],
